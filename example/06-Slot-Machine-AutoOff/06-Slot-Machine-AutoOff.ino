@@ -139,6 +139,9 @@ void loop()
         serialState = 0;             
     }
 
+    // Millis time start
+    unsigned long current_millis = millis();
+
 
     // Wait 1 second
     if(current_millis - previous_millis >= 1000)
