@@ -26,7 +26,7 @@
                         // Also install the Time library if needed: https://github.com/PaulStoffregen/Time 
 
 // Choose Time Format
-#define HH    12        // 12 Hour Clock or 24 Hour Clock
+#define HH    24        // 12 Hour Clock or 24 Hour Clock
           
 #define EN    A2        // Nixie Power Supply Module: "0" - ON, "1" - OFF                  
 #define DIN   12        // HV5812 serial data input             
@@ -141,6 +141,19 @@ void loop()
 
     // Millis time start
     unsigned long current_millis = millis();
+
+    // Sleep after hours
+    t = RTC.get();
+    int timeHour = hour(t);
+    
+//    if (timeHour > 8 && timeHour < 22) {
+//      digitalWrite(EN, LOW);  
+//      
+//    } else {
+//      digitalWrite(EN, HIGH);     // Turn off NPS - Nixie Power Supply Module
+//    }
+//    
+//  
 
     // Wait 1 second
     if(current_millis - previous_millis >= 1000)
