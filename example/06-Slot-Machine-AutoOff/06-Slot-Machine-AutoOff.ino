@@ -139,21 +139,6 @@ void loop()
         serialState = 0;             
     }
 
-    // Millis time start
-    unsigned long current_millis = millis();
-
-    // Sleep after hours
-    t = RTC.get();
-    int timeHour = hour(t);
-    
-//    if (timeHour > 8 && timeHour < 22) {
-//      digitalWrite(EN, LOW);  
-//      
-//    } else {
-//      digitalWrite(EN, HIGH);     // Turn off NPS - Nixie Power Supply Module
-//    }
-//    
-//  
 
     // Wait 1 second
     if(current_millis - previous_millis >= 1000)
@@ -216,11 +201,21 @@ void DisplayTime()
 
     // Activate "Slot Machine Effect" every 60 seconds
     if(second(t) == 0)
+  // only display during operating hours
+  if (timeHour > 7 && timeHour < 22) {
+    digitalWrite(EN, LOW);     // Enable power supply
+    // Activate "Slot Machine Effect" every hour
+    if (minute(t) == 0 && second(t) == 0)
     {
-        SlotMachine();      
+      SlotMachine();
     }
 
     NixieDisplay(digit1, digit2, digit3, digit4);
+
+  } else {
+    digitalWrite(EN, HIGH);     // Turn off NPS - Nixie Power Supply Module
+  }
+
 }
 
 void SlotMachine()
